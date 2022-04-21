@@ -1,0 +1,49 @@
+-- ----------------------------
+-- Table structure for crypto_assets_settle
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."crypto_assets_settle";
+CREATE TABLE "public"."crypto_assets_settle" (
+  "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
+  "remarks" varchar COLLATE "pg_catalog"."default" DEFAULT ''::character varying,
+  "create_time" timestamptz(6) NOT NULL DEFAULT now(),
+  "update_time" timestamptz(6) NOT NULL DEFAULT now(),
+  "delete_time" timestamptz(6),
+  "version" int4 NOT NULL,
+  "user_id" varchar COLLATE "pg_catalog"."default" NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000'::character varying,
+  "account_id" uuid NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000'::uuid,
+  "settle_type" varchar COLLATE "pg_catalog"."default",
+  "balance_id" uuid NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000'::uuid,
+  "start_balance" float8 NOT NULL DEFAULT '0'::double precision,
+  "end_balance" float8 NOT NULL DEFAULT '0'::double precision,
+  "append_amount" float8 NOT NULL DEFAULT '0'::double precision,
+  "difference" float8 NOT NULL DEFAULT '0'::double precision,
+  "currency" varchar(30) COLLATE "pg_catalog"."default" NOT NULL DEFAULT 'USD'::character varying,
+  "is_flat" bool NOT NULL DEFAULT false,
+   "start_time" timestamptz(6) NOT NULL ,
+  "end_time" timestamptz(6) NOT NULL ,
+    "third_is_flat" bool NOT NULL DEFAULT false, 
+  "settle_date" varchar(12) COLLATE "pg_catalog"."default",
+  "raw_data" jsonb
+)
+;
+ALTER TABLE "public"."crypto_assets_settle" OWNER TO "qbit_admin";
+COMMENT ON COLUMN "public"."crypto_assets_settle"."remarks" IS '备注';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."user_id" IS '操作人用户id';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."account_id" IS '商户账户id';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."settle_type" IS '业务类型:对账类型（USD/USDC/理财本金/理财收益）';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."balance_id" IS '余额id';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."start_balance" IS '期初余额';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."end_balance" IS '期初余额';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."append_amount" IS '交易额';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."difference" IS '差额';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."currency" IS '币种';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."is_flat" IS '账单是否平的';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."third_is_flat" IS '三方对账是否正确';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."start_time" IS '对账开始时间';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."end_time" IS '对账结束时间';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."settle_date" IS '对账日期';
+COMMENT ON COLUMN "public"."crypto_assets_settle"."raw_data" IS '对账额外信息';
+
+
+
+
